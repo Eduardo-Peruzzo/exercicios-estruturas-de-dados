@@ -93,18 +93,29 @@ public:
     }
     
     void removern(int n) {
-        // if (head->proximo == nullptr) {
-        //     return;
-        // } else {
-        //     No *p = head;
-        //     while (p->proximo != nullptr) {
-        //         if (p->proximo->dado != info) p = p -> proximo;
-        //         else {
-        //             p->proximo = p->proximo->proximo;
-        //             break;
-        //         }
-        //     }
-        // }
+        No *p = head;
+        int contador = 0;
+        while (p->proximo != nullptr) {
+            contador++;
+            if (contador != n) p = p -> proximo;
+            else {
+                p->proximo = p->proximo->proximo;
+                break;
+            }
+        }
+    }
+    
+    void duplicar() {
+        No* p = head->proximo;
+        while (p != nullptr) {
+            No* novo = new No(p->dado, p->proximo);
+            p->proximo = novo;
+            p = novo->proximo;
+        }
+    }
+    
+    void inverter_recursivo() {
+        
     }
     
     void print() {
@@ -119,10 +130,6 @@ public:
 
 int main() {
     ListaEncadeada lista;
-
-    cout << "Valor no índice 2 (de trás pra frente): ";
-    int valor3 = lista.nfinal(2);
-    cout << valor3 << endl;
     
     lista.add(10);
     lista.add(20);
@@ -136,6 +143,10 @@ int main() {
 
     lista.add(40);
     cout << "Após adicionar 40: ";
+    lista.print();
+    
+    cout << "Duplicando lista: ";
+    lista.duplicar();
     lista.print();
     
     cout << "Num de elementos na lista: " << lista.contar() << endl;
@@ -155,6 +166,12 @@ int main() {
     cout << "Valor no índice 1 (de trás pra frente): ";
     int valor2 = lista.nfinal(1);
     cout << valor2 << endl;
+    
+    cout << "Removendo elemento 2 da lista: ";
+    lista.removern(2);
+    lista.print();
+    
+    
     
     return 0;
 }
