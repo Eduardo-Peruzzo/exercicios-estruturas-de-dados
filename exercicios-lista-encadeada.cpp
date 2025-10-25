@@ -33,7 +33,9 @@ public:
             while (p->proximo != nullptr) {
                 if (p->proximo->dado != info) p = p -> proximo;
                 else {
+                    No* temp = p->proximo;
                     p->proximo = p->proximo->proximo;
+                    delete temp;
                     break;
                 }
             }
@@ -99,7 +101,9 @@ public:
             contador++;
             if (contador != n) p = p -> proximo;
             else {
+                No* temp = p->proximo;
                 p->proximo = p->proximo->proximo;
+                delete temp;
                 break;
             }
         }
@@ -111,6 +115,21 @@ public:
             No* novo = new No(p->dado, p->proximo);
             p->proximo = novo;
             p = novo->proximo;
+        }
+    }
+    
+    void remover_duplicatas() {
+        No* p = head->proximo;
+        while (p != nullptr) {
+            No* t = p;
+            while (t->proximo != nullptr) {
+                if (p->dado == t->proximo->dado) {
+                    No* temp = t->proximo;
+                    t->proximo = t->proximo->proximo;
+                    delete temp;
+                } else t = t->proximo;
+            }
+            p = p->proximo;
         }
     }
     
@@ -127,6 +146,16 @@ public:
         cout << endl;
     }
 };
+
+ListaEncadeada mesclar(ListaEncadeada lista1, ListaEncadeada lista2) {
+    No* p = lista2.head->proximo;
+    while (p != nullptr) {
+        lista1.add(p->dado);
+        p = p->proximo;
+    }
+    ListaEncadeada mesclada = lista1;
+    return mesclada;
+}
 
 int main() {
     ListaEncadeada lista;
@@ -171,7 +200,20 @@ int main() {
     lista.removern(2);
     lista.print();
     
+    cout << "Removendo duplicatas: ";
+    lista.remover_duplicatas();
+    lista.print();
     
+    ListaEncadeada lista2;
+    lista2.add(15);
+    lista2.add(25);
+    lista2.add(35);
+    cout << "Lista 2: ";
+    lista2.print();
+    
+    cout << "Mescla das duas: ";
+    ListaEncadeada mesclada = mesclar(lista, lista2);
+    mesclada.print();
     
     return 0;
 }
