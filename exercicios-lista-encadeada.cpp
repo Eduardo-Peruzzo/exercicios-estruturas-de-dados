@@ -203,6 +203,26 @@ public:
         return false;
     }
     
+    pair<ListaEncadeada, ListaEncadeada> dividir() {
+        ListaEncadeada primeira;
+        ListaEncadeada segunda;
+    
+        if (head->proximo == nullptr) {
+            return {primeira, segunda};
+        }
+        
+        int tamanho = contar();
+        int contador = 0;
+        No* p = head->proximo;
+        while (p != nullptr) {
+            contador++;
+            if (contador <= tamanho/2) primeira.add(p->dado);
+            else segunda.add(p->dado);
+            p = p->proximo;
+        }
+        return {primeira, segunda};
+    }
+    
     void print() {
         No* p = head->proximo;
         while (p != nullptr) {
@@ -296,6 +316,15 @@ int main() {
     cout << "Lista palindromo: ";
     palindromo.print();
     cout << "É palíndromo: " << palindromo.palindromo() << endl;
+    
+    cout << "Lista atual: ";
+    lista.print();
+    auto [l1, l2] = lista.dividir();
+
+    cout << "Primeira metade: ";
+    l1.print();
+    cout << "Segunda metade: ";
+    l2.print();
     
     return 0;
 }
