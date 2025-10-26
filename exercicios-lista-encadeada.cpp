@@ -152,8 +152,19 @@ public:
         }
     }
     
+    No* aux_inverter_recursivo(No *no) {
+        if (no == nullptr || no->proximo == nullptr) {
+            head->proximo = no;
+            return no;
+        }
+        No* ultimo = aux_inverter_recursivo(no->proximo);
+        ultimo->proximo = no;
+        no->proximo = nullptr;
+        return no;
+    }
+    
     void inverter_recursivo() {
-        
+        aux_inverter_recursivo(head->proximo);
     }
     
     void print() {
@@ -236,6 +247,10 @@ int main() {
     
     mesclada.sort();
     cout << "Mesclada sorted: ";
+    mesclada.print();
+    
+    mesclada.inverter_recursivo();
+    cout << "Mesclada invertida de forma recursiva: ";
     mesclada.print();
     
     return 0;
