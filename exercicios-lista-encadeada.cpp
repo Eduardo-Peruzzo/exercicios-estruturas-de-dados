@@ -167,6 +167,42 @@ public:
         aux_inverter_recursivo(head->proximo);
     }
     
+    bool palindromo() {
+        ListaEncadeada lista_invertida;
+
+        No* p = head->proximo;
+        while (p != nullptr) {
+            lista_invertida.add(p->dado);
+            p = p->proximo;
+        }
+    
+        lista_invertida.inverter();
+        
+        p = head->proximo;
+        No* t = lista_invertida.head->proximo;
+        
+        while(p != nullptr) {
+            if (p->dado != t->dado) return false;
+            p = p->proximo;
+            t = t->proximo;
+        }
+        return true;
+    }
+    
+    // usei um negócio chamado "algoritmo de Floyd"
+    bool detectar_ciclos() {
+        No* lento = head;
+        No* rapido = head;
+    
+        while (rapido != nullptr && rapido->proximo != nullptr) {
+            lento = lento->proximo;
+            rapido = rapido->proximo->proximo;
+    
+            if (lento == rapido) return true;
+        }
+        return false;
+    }
+    
     void print() {
         No* p = head->proximo;
         while (p != nullptr) {
@@ -252,6 +288,14 @@ int main() {
     mesclada.inverter_recursivo();
     cout << "Mesclada invertida de forma recursiva: ";
     mesclada.print();
+    
+    ListaEncadeada palindromo;
+    palindromo.add(10);
+    palindromo.add(20);
+    palindromo.add(10);
+    cout << "Lista palindromo: ";
+    palindromo.print();
+    cout << "É palíndromo: " << palindromo.palindromo() << endl;
     
     return 0;
 }
