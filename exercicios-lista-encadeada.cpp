@@ -133,6 +133,25 @@ public:
         }
     }
     
+    void sort() {
+        No* p = head->proximo;
+        
+        while (p != nullptr) {
+            No* t = p;
+            No* menor = t;
+            while (t != nullptr) {
+                if (t->dado < menor->dado) {
+                    menor = t;
+                }
+                t = t->proximo;
+            }
+            int temp = menor->dado;
+            menor->dado = p->dado;
+            p->dado = temp;
+            p = p->proximo;
+        }
+    }
+    
     void inverter_recursivo() {
         
     }
@@ -205,14 +224,18 @@ int main() {
     lista.print();
     
     ListaEncadeada lista2;
+    lista2.add(35);
     lista2.add(15);
     lista2.add(25);
-    lista2.add(35);
     cout << "Lista 2: ";
     lista2.print();
     
     cout << "Mescla das duas: ";
     ListaEncadeada mesclada = mesclar(lista, lista2);
+    mesclada.print();
+    
+    mesclada.sort();
+    cout << "Mesclada sorted: ";
     mesclada.print();
     
     return 0;
